@@ -23,23 +23,23 @@ public class HomeController {
 	@RequestMapping(value="/crawl.do",method=RequestMethod.GET)
 	public ModelAndView crawl(ModelAndView model) {
 		//Jsoup: https://jsoup.org/
-		//Jsoup¸¦ ÀÌ¿ëÇØ¼­ ³×ÀÌ¹ö ½ºÆ÷Ã÷ Å©·Ñ¸µ
+		//Jsoupë¥¼ ì´ìš©í•´ì„œ ë„¤ì´ë²„ ìŠ¤í¬ì¸  í¬ë¡¤ë§
 		String url = "https://sports.news.naver.com/wfootball/index.nhn";
 		Document doc = null;
 		
 		try {
-			doc = Jsoup.connect(url).get();   // get¹æ½Ä°ú post¹æ½ÄÀÌ Á¸ÀçÇÑ´Ù.
+			doc = Jsoup.connect(url).get();   // getë°©ì‹ê³¼ postë°©ì‹ì´ ì¡´ì¬í•œë‹¤.
 			
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
 		
-		//ÁÖ¿ä ´º½º·Î ³ª¿À´Â ÅÂ±×¸¦ Ã£¾Æ¼­ °¡Á®¿Àµµ·Ï ÇÑ´Ù.
+		//ì£¼ìš” ë‰´ìŠ¤ë¡œ ë‚˜ì˜¤ëŠ” íƒœê·¸ë¥¼ ì°¾ì•„ì„œ ê°€ì ¸ì˜¤ë„ë¡ í•œë‹¤.
 		Elements element = doc.select("div.home_news");
 		System.out.println("################## div.home_news ##################");
 		System.out.println(element);
 		
-		//1. Çì´õºÎºĞÀÇ Á¦¸ñÀ» °¡Á®¿Â´Ù.
+		//1. í—¤ë”ë¶€ë¶„ì˜ ì œëª©ì„ ê°€ì ¸ì˜¨ë‹¤.
 		String title = element.select("h2").text().substring(0,4);
 		
 		System.out.println("==========================================");
@@ -49,7 +49,7 @@ public class HomeController {
 		ArrayList<String> list_text = new ArrayList<String>();
 		ArrayList<String> list_link = new ArrayList<String>();
 		
-		// 2. ÇÏÀ§ ´º½º ±â»çµéÀ» for¹® µ¹¸é¼­ Ãâ·Â
+		// 2. í•˜ìœ„ ë‰´ìŠ¤ ê¸°ì‚¬ë“¤ì„ forë¬¸ ëŒë©´ì„œ ì¶œë ¥
 		for(Element el: element.select("li")) {
 			String text = el.text().toString();
 			String link = "https://sports.news.naver.com/" +el.select("a").attr("href");

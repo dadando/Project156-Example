@@ -17,10 +17,10 @@ public class PeopleController {
 	@Autowired
 	private PeopleService peopleService;
 	
-	//produces ¼Ó¼ºÀ» ÀÌ¿ëÇØ ResponseÀÇ Content-TypeÀ» Á¦¾îÇÒ ¼ö ÀÖ´Ù.
+	//produces ì†ì„±ì„ ì´ìš©í•´ Responseì˜ Content-Typeì„ ì œì–´í•  ìˆ˜ ìˆë‹¤.
 	@RequestMapping(value="/getPeopleJSON.do", method=RequestMethod.POST, 
 			produces="application/json;charset=UTF-8")
-	@ResponseBody // jsp¿Í °°Àº ºä¸¦ Àü´Ş ÇÏ´Â°Ô ¾Æ´Ñ µ¥ÀÌÅÍ¸¦ Àü´Ş ÇÏ±â À§ÇØ »ç¿ë
+	@ResponseBody // jspì™€ ê°™ì€ ë·°ë¥¼ ì „ë‹¬ í•˜ëŠ”ê²Œ ì•„ë‹Œ ë°ì´í„°ë¥¼ ì „ë‹¬ í•˜ê¸° ìœ„í•´ ì‚¬ìš©
 	public List<PeopleVO> getPeopleJSONGET(){
 		
 		List<PeopleVO> list = peopleService.getPeoplejson();
@@ -32,7 +32,7 @@ public class PeopleController {
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public Map<String,Object> insertPeople(PeopleVO vo){
-		Map<String,Object> retVal = new HashMap<String,Object>(); //¸®ÅÏ°ª ÀúÀå
+		Map<String,Object> retVal = new HashMap<String,Object>(); //ë¦¬í„´ê°’ ì €ì¥
 		try {
 			peopleService.insertPeople(vo);
 			
@@ -48,7 +48,7 @@ public class PeopleController {
 	@RequestMapping(value="/deletePeople.do", produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public Map<String,Object> deletePeople(@RequestParam(value="id") String id){
-		Map<String,Object> retVal = new HashMap<String,Object>(); //¸®ÅÏ°ª ÀúÀå
+		Map<String,Object> retVal = new HashMap<String,Object>(); //ë¦¬í„´ê°’ ì €ì¥
 		try {
 			peopleService.deletePeople(id);
 			
@@ -72,7 +72,7 @@ public class PeopleController {
 	@RequestMapping(value="/updatePeople.do", produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public Map<String,Object> updatePeople(PeopleVO vo){
-		Map<String,Object> retVal = new HashMap<String,Object>(); //¸®ÅÏ°ª ÀúÀå
+		Map<String,Object> retVal = new HashMap<String,Object>(); //ë¦¬í„´ê°’ ì €ì¥
 		try {
 			peopleService.updatePeople(vo);
 			retVal.put("res","OK");

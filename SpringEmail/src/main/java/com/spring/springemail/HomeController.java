@@ -23,40 +23,41 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 	
+	@Autowired
+	JavaMailSender mailSender; //ë©”ì¼ ì„œë¹„ìŠ¤ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ ì˜ì¡´ì„±ì„ ì£¼ì…í•¨
+	
+	
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public String home() {
 		return "home";
 	}
 	
-	@Autowired
-	JavaMailSender mailSender; //¸ŞÀÏ ¼­ºñ½º¸¦ »ç¿ëÇÏ±â À§ÇØ ÀÇÁ¸¼ºÀ» ÁÖÀÔÇÔ
-	
-	//MailSendingÄÚµå
+	//MailSendingì½”ë“œ
 	@RequestMapping(value="/auth.do" , method=RequestMethod.POST)
 	public ModelAndView mailSending(HttpServletRequest request,String e_mail,
 			HttpServletResponse response) throws IOException{
 		Random r = new Random();
-		int num = r.nextInt(999999); //ÀÌ¸ŞÀÏ·Î ¹Ş´Â ÀÎÁõÄÚµå ºÎºĞ(³­¼ö)
+		int num = r.nextInt(999999); //ì´ë©”ì¼ë¡œ ë°›ëŠ” ì¸ì¦ì½”ë“œ ë¶€ë¶„(ë‚œìˆ˜)
 		
-		//String setfrom = "gmail ÀÌ¸ŞÀÏ ÁÖ¼Ò"; //Gmail »ç¿ë½Ã
-		//String setfrom = "daum ÀÌ¸ŞÀÏ ÁÖ¼Ò"; //daum »ç¿ë½Ã
-		String setfrom = "dadando@naver.com";	//³×ÀÌ¹ö »ç¿ë½Ã
-		String tomail = request.getParameter("email"); //¹Ş´Â »ç¶÷ ÀÌ¸ŞÀÏ
-		String title = "È¸¿ø°¡ÀÔ ÀÎÁõ ÀÌ¸ŞÀÏ ÀÔ´Ï´Ù."; //Á¦¸ñ
+		//String setfrom = "gmail ì´ë©”ì¼ ì£¼ì†Œ"; //Gmail ì‚¬ìš©ì‹œ
+		//String setfrom = "daum ì´ë©”ì¼ ì£¼ì†Œ"; //daum ì‚¬ìš©ì‹œ
+		String setfrom = "dadando@naver.com";	//ë„¤ì´ë²„ ì‚¬ìš©ì‹œ
+		String tomail = request.getParameter("email"); //ë°›ëŠ” ì‚¬ëŒ ì´ë©”ì¼
+		String title = "íšŒì›ê°€ì… ì¸ì¦ ì´ë©”ì¼ ì…ë‹ˆë‹¤."; //ì œëª©
 		String content = System.getProperty("line.separator")
-				+"¾È³çÇÏ¼¼¿ä. È¸¿ø´Ô ÀúÈñ È¨ÆäÀÌÁö¸¦ Ã£¾ÆÁÖ¼Å¼­ °¨»çÇÕ´Ï´Ù."
+				+"ì•ˆë…•í•˜ì„¸ìš”. íšŒì›ë‹˜ ì €í¬ í™ˆí˜ì´ì§€ë¥¼ ì°¾ì•„ì£¼ì…”ì„œ ê°ì‚¬í•©ë‹ˆë‹¤."
 				+System.getProperty("line.separator")
-				+"ÀÎÁõ¹øÈ£´Â " + num+" ÀÔ´Ï´Ù."
+				+"ì¸ì¦ë²ˆí˜¸ëŠ” " + num+" ì…ë‹ˆë‹¤."
 				+System.getProperty("line.separator")
-				+"¹ŞÀ¸½Å ÀÎÁõ¹øÈ£¸¦ È¨ÆäÀÌÁö¿¡ ÀÔ·ÂÇØ ÁÖ½Ã¸é ´ÙÀ½À¸·Î ³Ñ¾î°©´Ï´Ù."; //³»¿ë
+				+"ë°›ìœ¼ì‹  ì¸ì¦ë²ˆí˜¸ë¥¼ í™ˆí˜ì´ì§€ì— ì…ë ¥í•´ ì£¼ì‹œë©´ ë‹¤ìŒìœ¼ë¡œ ë„˜ì–´ê°‘ë‹ˆë‹¤."; //ë‚´ìš©
 		try {
 			MimeMessage message= mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message,true,"UTF-8");
 			
-			messageHelper.setFrom(setfrom); // º¸³»´Â »ç¶÷ »ı·«ÇÏ¸é Á¤»ó ÀÛµ¿À» ¾ÈÇÔ
-			messageHelper.setTo(tomail);	// ¹Ş´Â»ç¶÷ ÀÌ¸ŞÀÏ
-			messageHelper.setSubject(title);// ¸ŞÀÏ Á¦¸ñÀº »ı·« °¡´É
-			messageHelper.setText(content); // ¸ŞÀÏ ³»¿ë
+			messageHelper.setFrom(setfrom); // ë³´ë‚´ëŠ” ì‚¬ëŒ ìƒëµí•˜ë©´ ì •ìƒ ì‘ë™ì„ ì•ˆí•¨
+			messageHelper.setTo(tomail);	// ë°›ëŠ”ì‚¬ëŒ ì´ë©”ì¼
+			messageHelper.setSubject(title);// ë©”ì¼ ì œëª©ì€ ìƒëµ ê°€ëŠ¥
+			messageHelper.setText(content); // ë©”ì¼ ë‚´ìš©
 		
 			mailSender.send(message);
 		}catch(Exception e) {
@@ -69,21 +70,21 @@ public class HomeController {
 		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out_email = response.getWriter();
-		out_email.println("<script>alert('ÀÌ¸ŞÀÏÀÌ ¹ß¼ÛµÇ¾ú½À´Ï´Ù. ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.');</script>");
+		out_email.println("<script>alert('ì´ë©”ì¼ì´ ë°œì†¡ë˜ì—ˆìŠµë‹ˆë‹¤. ì¸ì¦ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.');</script>");
 		out_email.flush();
 		
 		return mv;
 	}
 	
-	//ÀÌ¸ŞÀÏ ÀÎÁõ ÆäÀÌÁö ¸ÊÇÎ ¸Ş¼Òµå
+	//ì´ë©”ì¼ ì¸ì¦ í˜ì´ì§€ ë§µí•‘ ë©”ì†Œë“œ
 	@RequestMapping("/email.do")
 	public String email() {
 		return "home";
 	}
 	
-	//ÀÌ¸ŞÀÏ·Î ¹ŞÀº ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇÏ°í Àü¼Û ¹öÆ°À» ´©¸£¸é ¸ÊÇÎÀÌµÇ´Â ¸Ş¼Òµå.
-	//³»°¡ ÀÔ·ÂÇÑ ÀÎÁõ¹øÈ£¿Í ¸ŞÀÏ·Î ÀÔ·ÂÇÑ ÀÎÁõ¹øÈ£°¡ ¸Â´ÂÁö È®ÀÎÇØ¼­ ¸ÂÀ¸¸é È¸¿ø°¡ÀÔ ÆäÀÌÁö·Î ³Ñ¾î°¡°í,
-	//Æ²¸®¸é ´Ù½Ã ¿ø·¡ ÆäÀÌÁö·Î µ¹¾Æ¿À´Â ¸Ş¼Òµå
+	//ì´ë©”ì¼ë¡œ ë°›ì€ ì¸ì¦ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ê³  ì „ì†¡ ë²„íŠ¼ì„ ëˆ„ë¥´ë©´ ë§µí•‘ì´ë˜ëŠ” ë©”ì†Œë“œ.
+	//ë‚´ê°€ ì…ë ¥í•œ ì¸ì¦ë²ˆí˜¸ì™€ ë©”ì¼ë¡œ ì…ë ¥í•œ ì¸ì¦ë²ˆí˜¸ê°€ ë§ëŠ”ì§€ í™•ì¸í•´ì„œ ë§ìœ¼ë©´ íšŒì›ê°€ì… í˜ì´ì§€ë¡œ ë„˜ì–´ê°€ê³ ,
+	//í‹€ë¦¬ë©´ ë‹¤ì‹œ ì›ë˜ í˜ì´ì§€ë¡œ ëŒì•„ì˜¤ëŠ” ë©”ì†Œë“œ
 	@RequestMapping(value="/join_injeung.do", method = RequestMethod.POST)
 	public ModelAndView join_injeung(@RequestParam(value="email_injeung")
 		String email_injeung,@RequestParam(value="num")
@@ -92,13 +93,13 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView();
 		
 		if(email_injeung.equals(num)) {
-			//ÀÎÁõ¹øÈ£°¡ ÀÏÄ¡ÇÒ °æ¿ì ÀÎÁõ¹øÈ£°¡ ¸Â´Ù´Â Ã¢À» Ãâ·ÂÇÏ°í È¸¿ø°¡ÀÔÃ¢À¸·Î ÀÌµ¿ÇÔ
+			//ì¸ì¦ë²ˆí˜¸ê°€ ì¼ì¹˜í•  ê²½ìš° ì¸ì¦ë²ˆí˜¸ê°€ ë§ë‹¤ëŠ” ì°½ì„ ì¶œë ¥í•˜ê³  íšŒì›ê°€ì…ì°½ìœ¼ë¡œ ì´ë™í•¨
 			mv.setViewName("join");
 			
-			//¸¸¾à ÀÎÁõ¹øÈ£°¡ °°´Ù¸é ÀÌ¸ŞÀÏÀ» È¸¿ø°¡ÀÔ ÆäÀÌÁö·Î °°ÀÌ ³Ñ°Ü¼­ ÀÌ¸ŞÀÏÀ» ÇÑ¹ø ´õ ÀÔ·ÂÇÒ ÇÊ¿ä°¡ ¾ø°Ô ÇÑ´Ù.
+			//ë§Œì•½ ì¸ì¦ë²ˆí˜¸ê°€ ê°™ë‹¤ë©´ ì´ë©”ì¼ì„ íšŒì›ê°€ì… í˜ì´ì§€ë¡œ ê°™ì´ ë„˜ê²¨ì„œ ì´ë©”ì¼ì„ í•œë²ˆ ë” ì…ë ¥í•  í•„ìš”ê°€ ì—†ê²Œ í•œë‹¤.
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter writer = response.getWriter();
-			writer.println("<script>alert('ÀÎÁõ¹øÈ£°¡ ÀÏÄ¡ÇÏ¿´½À´Ï´Ù. È¸¿ø°¡ÀÔÃ¢À¸·Î ÀÌµ¿ÇÕ´Ï´Ù.');</script>");
+			writer.println("<script>alert('ì¸ì¦ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì˜€ìŠµë‹ˆë‹¤. íšŒì›ê°€ì…ì°½ìœ¼ë¡œ ì´ë™í•©ë‹ˆë‹¤.');</script>");
 			writer.flush();
 			
 			return mv;
@@ -108,7 +109,7 @@ public class HomeController {
 			
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter writer = response.getWriter();
-			writer.println("<script>alert('ÀÎÁõ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù. ÀÎÁõ¹øÈ£¸¦ ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.');history.go(-1);</script>");
+			writer.println("<script>alert('ì¸ì¦ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤. ì¸ì¦ë²ˆí˜¸ë¥¼ ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”.');history.go(-1);</script>");
 			writer.flush();
 			
 			return mv2;

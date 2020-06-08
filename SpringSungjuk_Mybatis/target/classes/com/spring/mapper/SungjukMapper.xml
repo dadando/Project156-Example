@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- namespace="com.spring.mapper.SungjukMapper는 SungjukMapper인터페이스(SungjukMapper.class)의 이름을 사용한다. -->
+	<!-- root-context에서 아래와 같이 typeAliasesPackage를 설정하면 패키지 경로 생략 가능. -->
+<mapper namespace="com.spring.mapper.SungjukMapper">
+	<!-- HashMap 이용시 추가부분 -->
+	<resultMap type="java.util.HashMap" id="hashmapVO">
+		<result property="hakbun" column="hakbun" />
+		<result property="name" column="name" />
+		<result property="kor" column="kor" />
+		<result property="eng" column="eng" />
+		<result property="math" column="math" />
+		<result property="tot" column="tot" />
+		<result property="avg" column="avg" />
+		<result property="grade" column="grade" />
+	</resultMap>
+	
+	<resultMap type="com.spring.springsungjuk_mybatis.SungjukVO" id="SungjukResultMap">
+		<result property="hakbun" column="hakbun" />
+		<result property="name" column="name" />
+		<result property="kor" column="kor" />
+		<result property="eng" column="eng" />
+		<result property="math" column="math" />
+		<result property="tot" column="tot" />
+		<result property="avg" column="avg" />
+		<result property="grade" column="grade" />
+	</resultMap>
+	
+	<select id="getSungjuklist" resultMap="SungjukResultMap">
+		SELECT * FROM sungjuk ORDER BY hakbun
+	</select>
+	
+	<select id="selectSungjuk" parameterType="String" resultMap="SungjukResultMap">
+		SELECT * FROM sungjuk WHERE hakbun=#{hakbun}
+	</select>
+	
+	<insert id="insertSungjuk" parameterType="com.spring.springsungjuk_mybatis.SungjukVO" >
+		INSERT INTO sungjuk VALUES(#{hakbun},#{name},#{kor},#{eng},#{math},#{tot},#{avg},#{grade})
+	</insert>
+	
+	<update id="updateSungjuk" parameterType="com.spring.springsungjuk_mybatis.SungjukVO">
+		UPDATE sungjuk SET kor=#{kor},eng=#{eng},math=#{math},tot=#{tot},avg=#{avg},grade=#{grade} WHERE hakbun=#{hakbun}
+	</update>
+	
+	<delete id="deleteSungjuk" parameterType="String">
+		DELETE FROM sungjuk WHERE hakbun=#{hakbun}
+	</delete>
+	
+	<select id="getCount" resultType="int">
+		SELECT count(*) FROM sungjuk
+	</select>
+	
+	
+</mapper>

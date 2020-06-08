@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /*
-@RestController: ½ºÇÁ¸µ 4Á¡´ë ¹öÀüºÎÅÍ Áö¿øÇÏ´Â ¾î³ëÅ×ÀÌ¼Ç.
-ÄÁÆ®·Ñ·¯ Å¬·¡½º¿¡ @RestController¸¸ ºÙÀÌ¸é ¸Ş¼Òµå¿¡ 
-@ResponseBody ¾î³ëÅ×ÀÌ¼ÇÀ» ºÙÀÌÁö ¾Ê¾Æµµ ¹®ÀÚ¿­°ú JSONµîÀ» Àü¼ÛÇÒ ¼ö ÀÖ´Ù.
-ºä¸¦ ¸®ÅÏÇÏ´Â ¸Ş¼Òµå¸¦ °¡Áö°íÀÖ´Â @Controller¿Í´Â ´Ù¸£°Ô 
-@RestController´Â ¹®ÀÚ¿­, °´Ã¼µîÀ» ¸®ÅÏÇÏ´Â ¸Ş¼ÒµåµéÀ» °¡Áö°í ÀÖ´Ù. 
+@RestController: ìŠ¤í”„ë§ 4ì ëŒ€ ë²„ì „ë¶€í„° ì§€ì›í•˜ëŠ” ì–´ë…¸í…Œì´ì…˜.
+ì»¨íŠ¸ë¡¤ëŸ¬ í´ë˜ìŠ¤ì— @RestControllerë§Œ ë¶™ì´ë©´ ë©”ì†Œë“œì— 
+@ResponseBody ì–´ë…¸í…Œì´ì…˜ì„ ë¶™ì´ì§€ ì•Šì•„ë„ ë¬¸ìì—´ê³¼ JSONë“±ì„ ì „ì†¡í•  ìˆ˜ ìˆë‹¤.
+ë·°ë¥¼ ë¦¬í„´í•˜ëŠ” ë©”ì†Œë“œë¥¼ ê°€ì§€ê³ ìˆëŠ” @Controllerì™€ëŠ” ë‹¤ë¥´ê²Œ 
+@RestControllerëŠ” ë¬¸ìì—´, ê°ì²´ë“±ì„ ë¦¬í„´í•˜ëŠ” ë©”ì†Œë“œë“¤ì„ ê°€ì§€ê³  ìˆë‹¤. 
 */
 
 @RestController
@@ -25,9 +25,9 @@ public class PeopleController {
 	private PeopleService peopleService;
 	
 	
-	//produces ¼Ó¼ºÀ» ÀÌ¿ëÇØ ResponseÀÇ Content-TypeÀ» Á¦¾îÇÒ ¼ö ÀÖ´Ù
-	//@PostMapping : Method°¡ POST ¹æ½ÄÀÏ ¶§¸¸ »ç¿ëÇÑ´Ù´Â ÀÇ¹Ì.
-	//@GetMapping : Method°¡ GET ¹æ½ÄÀÏ ¶§¸¸ »ç¿ëÇÑ´Ù´Â ÀÇ¹Ì.
+	//produces ì†ì„±ì„ ì´ìš©í•´ Responseì˜ Content-Typeì„ ì œì–´í•  ìˆ˜ ìˆë‹¤
+	//@PostMapping : Methodê°€ POST ë°©ì‹ì¼ ë•Œë§Œ ì‚¬ìš©í•œë‹¤ëŠ” ì˜ë¯¸.
+	//@GetMapping : Methodê°€ GET ë°©ì‹ì¼ ë•Œë§Œ ì‚¬ìš©í•œë‹¤ëŠ” ì˜ë¯¸.
 	@PostMapping(value="/getPeopleJSON.do", produces="application/json;charset=UTF-8")
 	public List<PeopleVO> getPeopleJSONGET() {
 		List<PeopleVO> list = peopleService.getPeoplejson();
@@ -37,7 +37,7 @@ public class PeopleController {
 
 	@PostMapping(value="/insertPeople.do", produces="application/json;charset=UTF-8")
 	public Map<String, Object> insertPerson(PeopleVO vo) {
-		Map<String, Object> retVal = new HashMap<String, Object>(); //¸®ÅÏ°ª ÀúÀå
+		Map<String, Object> retVal = new HashMap<String, Object>(); //ë¦¬í„´ê°’ ì €ì¥
 		try{
 			peopleService.insertPeople(vo);
 			
@@ -63,7 +63,7 @@ public class PeopleController {
 	@RequestMapping(value="/updatePeople.do", produces="application/json;charset=UTF-8")
 	public Map<String, Object> updatePeople(PeopleVO vo) {
 
-		Map<String, Object> retVal = new HashMap<String, Object>(); //¸®ÅÏ°ª ÀúÀå
+		Map<String, Object> retVal = new HashMap<String, Object>(); //ë¦¬í„´ê°’ ì €ì¥
 		try{
 			peopleService.updatePeople(vo);
 			
@@ -80,7 +80,7 @@ public class PeopleController {
 
 	@RequestMapping(value="/deletePeople.do", produces="application/json;charset=UTF-8")
 	public Map<String, Object> deletePeople(@RequestParam(value="id") String id) {
-		Map<String, Object> retVal = new HashMap<String, Object>(); //¸®ÅÏ°ª ÀúÀå
+		Map<String, Object> retVal = new HashMap<String, Object>(); //ë¦¬í„´ê°’ ì €ì¥
 		try{
 			peopleService.deletePeople(id);
 			

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- namespace="com.spring.mapper.SungjukMapper는 SungjukMapper인터페이스(SungjukMapper.class)의 이름을 사용한다. -->
+	<!-- root-context에서 아래와 같이 typeAliasesPackage를 설정하면 패키지 경로 생략 가능. -->
+<mapper namespace="com.spring.mapper.BoardMapper">
+	<resultMap type="com.spring.memberboard_mybatis.BoardVO" id="BoardResultMap">
+		<result property="num" column="num" />
+		<result property="id" column="id" />
+		<result property="subject" column="subject" />
+		<result property="content" column="content" />
+		<result property="org_file" column="org_file" />
+		<result property="up_file" column="up_file" />
+		<result property="re_ref" column="re_ref" />
+		<result property="re_lev" column="re_lev" />
+		<result property="re_seq" column="re_seq" />
+		<result property="readcount" column="readcount" />
+		<result property="boarddate" column="boarddate" javaType="java.sql.Date"/>
+	</resultMap>
+	
+	<select id="getListCount" resultType="int">
+		select count(*) from smemberboard2
+	</select>
+	
+	<select id="getBoardList" resultMap="BoardResultMap">
+		 <!-- select * from (select rownum as rnum,num,id,subject,content,re_ref,re_lev,re_seq,readcount,boarddate from
+		 (select * from smemberboard2 order by re_ref desc,re_seq asc)) where rnum between #{startrow} and #{endrow} -->
+		 <!--
+		 <![CDATA[
+		 select * from 
+		 (select rownum as rnum,num,id,subject,content,re_ref,re_lev,re_seq,readcount,boarddate from
+		 (select * from smemberboard2 order by re_ref desc,re_seq asc)) where rnum >= #{startrow} and rnum<= #{endrow}
+		 ]]>
+		  -->
+		 <![CDATA[
+		 select * from
+		 (select row_number() over (order by re_ref desc,re_seq asc) rnum, s.* from smemberboard2 s)
+		 where rnum >=#{startrow} and rnum<=#{endrow}
+		 ]]>
+		 
+	</select>
+	
+	<insert id="boardInsert" parameterType="BoardVO">
+		insert into smemberboard2(num,id,subject,content,org_file,up_file,re_ref,re_lev,re_seq,readcount,boarddate)
+		values(#{num},#{id},#{subject},#{content},#{org_file,jdbcType=VARCHAR},#{up_file,jdbcType=VARCHAR},#{num},#{re_lev},#{re_seq},#{readcount},sysdate)
+	</insert>
+	
+	<select id="getNum" resultType="int">
+		select max(num) from smemberboard2
+	</select>
+	
+	<update id="setReadCountUpdate" parameterType="BoardVO">
+		update smemberboard2 set readcount= readcount+1 where num = #{num}
+	</update>
+	
+	<select id="getDetail" parameterType="BoardVO" resultMap="BoardResultMap">
+		select * from smemberboard2 where num = #{num}
+	</select>
+	
+	<update id="updateRE">
+		<![CDATA[
+		update smemberboard2 set re_seq = re_seq+1 where re_ref=#{re_ref} and re_seq>#{re_seq}
+		]]>
+	</update>
+	
+	<insert id="boardReply" parameterType="BoardVO">
+		insert into smemberboard2(num,id,subject,content,re_ref,re_lev,re_seq,readcount,boarddate) 
+		values(#{num},#{id},#{subject},#{content},#{re_ref},#{re_lev},#{re_seq},0,sysdate)
+	</insert>
+	
+	<update id="boardModify" parameterType="BoardVO">
+		update smemberboard2 set subject=#{subject}, content=#{content} where num=#{num}
+	</update>
+	
+	<delete id="boardDelete" parameterType="BoardVO">
+		delete from smemberboard2 where num=#{num}
+	</delete>
+</mapper>
