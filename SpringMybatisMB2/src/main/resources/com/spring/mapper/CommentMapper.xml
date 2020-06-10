@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace="com.spring.mapper.BoardMapper는 
+	 BoardMapper인퍼페이스(BoardMapper.class)의 이름을 사용한다. -->
+<!-- root-context에서 아래와 같이 typeAliasesPackage를 설정하면 패키지 경로 생략 가능. -->
+<mapper namespace = "com.spring.mapper.CommentMapper">
+	<select id = "commentCount" resultType="int">
+		select count(*) from table_comment
+	</select>
+	
+	<select id = "commentList" parameterType="int" resultType="CommentVO">
+		select * from table_comment where bno=#{bno} order by cno desc
+	</select>
+	
+	<insert id = "commentInsert" parameterType="CommentVO">
+		<selectKey keyProperty="cno" order="BEFORE" resultType="int">
+			select nvl(max(cno), 0)+1 from table_comment
+		</selectKey>
+		
+		insert into table_comment (cno,bno,content,writer,reg_date) values(#{cno},#{bno},#{content},#{writer},sysdate)
+	</insert>
+	
+	<update id = "commentUpdate" parameterType="CommentVO">
+		update table_comment set content = #{content} where cno = #{cno}
+	</update>
+	
+	<delete id = "commentDelete" parameterType="int">
+		delete from table_comment where cno = #{cno}
+	</delete>
+</mapper>
