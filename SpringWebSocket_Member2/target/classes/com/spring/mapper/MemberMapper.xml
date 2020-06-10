@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- namespace="com.spring.mapper.SungjukMapper는 SungjukMapper인터페이스(SungjukMapper.class)의 이름을 사용한다. -->
+	<!-- root-context에서 아래와 같이 typeAliasesPackage를 설정하면 패키지 경로 생략 가능. -->
+	<!-- 
+	create table member_socket(
+	    id varchar2(15) primary key,
+	    password varchar2(15),
+	    name varchar2(10)
+	);
+	-->
+<mapper namespace="com.spring.mapper.MemberMapper">
+	
+	<insert id="insertMember" parameterType="MemberVO">
+		insert into member_socket values(#{id},#{password},#{name})
+	</insert>
+	
+	<select id="checkPassword" parameterType="String" resultType="String">
+		select password from member_socket where id=#{id}
+	</select>
+	
+	<select id="getMemberList" resultType="MemberVO">
+		select * from member_socket 
+	</select>
+	
+	<select id="getInfo" parameterType="String" resultType="MemberVO">
+		select * from member_socket where id=#{id}
+	</select>
+	
+	<update id="updateMember" parameterType="MemberVO">
+		update member_socket set password=#{password},name=#{name} where id=#{id}
+	</update>
+	
+	<delete id="deletemember" parameterType="String">
+		delete from member_socket where id=#{id}
+	</delete>
+</mapper>
