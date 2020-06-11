@@ -29,7 +29,10 @@ Selenium
 브라켓 에디터(monokai/
 부트스트랩/
 포토샵: pixlr
-깃허브
+깃허브 다운로드 사이트:
+https://gitforwindows.org/
 프로그래머스 : 코딩테스트
 unsplash.com : 이미지 사이트
 pixabay.com : 이미지 사이트
+kakao developers : 카카오 API
+https://www.iamport.kr/ : 결제관련
