@@ -1,0 +1,85 @@
+@charset "UTF-8";
+
+/*여기부터 로그인 모달*/
+#login_form ul{
+    list-style: none;
+    margin:0px;
+    padding: 0px;
+    width:100%;
+}
+#login_form ul li{
+    padding: 5px 10px;
+	margin-bottom: 2px;
+}
+#login_form label{
+    float: left;
+	font-size: 13px;
+	width: 110px;
+    font-style: italic;
+    font-weight: bold;
+}
+#login_btn{
+    background: aquamarine;
+    border: none;
+    border-radius: 8px;
+    font: 13px 맑은고딕,굴림,돋움;
+    letter-spacing: 1px;
+    margin: auto;
+    padding: 7px 25px;
+}
+#login_btn:hover{
+	cursor:pointer;
+}
+/*여기까지 로그인 모달*/
+
+/*여기부터 회원가입 모달*/
+#join_form ul{
+    list-style: none;
+    margin:0px;
+    padding: 0px;
+    width:100%;
+}
+#join_form ul li{
+    padding: 5px 10px;
+	margin-bottom: 2px;
+}
+#join_form label{
+    float: left;
+	font-size: 13px;
+	width: 110px;
+    font-style: italic;
+    font-weight: bold;
+}
+#join_btn{
+    background: aquamarine;
+    border: none;
+    border-radius: 8px;
+    font: 13px 맑은고딕,굴림,돋움;
+    letter-spacing: 1px;
+    margin: auto;
+    padding: 7px 25px;
+}
+#join_btn:hover{
+	cursor:pointer;
+}
+#join_close{
+	background: aquamarine;
+    border: none;
+    border-radius: 8px;
+    font: 13px 맑은고딕,굴림,돋움;
+    letter-spacing: 1px;
+    margin: auto;
+    padding: 7px 25px;
+}
+#join_close:hover{
+	cursor:pointer;
+}
+/*여기까지 회원가입 모달*/
+
+a:hover{
+	cursor:pointer;
+	color:red;
+}
+a:active{
+	color:red;
+}
