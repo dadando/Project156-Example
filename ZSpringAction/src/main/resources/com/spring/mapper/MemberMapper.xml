@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- namespace="com.spring.mapper.SungjukMapper는 SungjukMapper인터페이스(SungjukMapper.class)의 이름을 사용한다. -->
+	<!-- root-context에서 아래와 같이 typeAliasesPackage를 설정하면 패키지 경로 생략 가능. -->
+<mapper namespace="com.spring.mapper.MemberMapper">
+	<resultMap type="com.spring.bid.member.MemberVO" id="MemberResultMap">
+		<result property="id" column="id" />
+		<result property="password" column="password" />
+		<result property="name" column="name" />
+		<result property="age" column="age" />
+		<result property="gender" column="gender" />
+		<result property="email" column="email" />
+	</resultMap>
+	
+	<insert id="insertMember" parameterType="MemberVO">
+		insert into smember values(#{id},#{password},#{name},#{age},#{gender},#{email})
+	</insert>
+	
+	<select id="checkPassword" parameterType="String" resultType="String">
+		select password from smember where id=#{id}
+	</select>
+	
+	<select id="getMemberList" resultMap="MemberResultMap">
+		select * from smember 
+	</select>
+	
+	<select id="getInfo" parameterType="String" resultMap="MemberResultMap">
+		select * from smember where id=#{id}
+	</select>
+	
+	<update id="updateMember" parameterType="MemberVO">
+		update smember set password=#{password},email=#{email} where id=#{id}
+	</update>
+	
+	<delete id="deletemember" parameterType="String">
+		delete from smember where id=#{id}
+	</delete>
+</mapper>
