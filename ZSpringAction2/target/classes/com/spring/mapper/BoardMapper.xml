@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- namespace="com.spring.mapper.SungjukMapper는 SungjukMapper인터페이스(SungjukMapper.class)의 이름을 사용한다. -->
+	<!-- root-context에서 아래와 같이 typeAliasesPackage를 설정하면 패키지 경로 생략 가능. -->
+<mapper namespace="com.spring.mapper.BoardMapper">
+	
+	<select id="getListCount" resultType="int">
+		select count(*) from bid_board
+	</select>
+	
+	<select id="getBoardList" resultType="BoardVO">
+		<![CDATA[
+		select * from
+		(select row_number() over (order by boarddate) rnum, s.* from bid_board s)
+		where rnum >=#{startrow} and rnum<=#{endrow}
+		]]>
+	</select>
+	
+	<insert id="boardInsert" parameterType="BoardVO">
+		<!-- <selectKey>는 insert구문에만 사용 가능 -->
+		<!-- order값은 "BEFORE|AFTER" 대문자 사용할것 -->
+		<!-- keyProperty="num"에서 num은 컬럼 명이다. -->
+		<selectKey keyProperty="num" order="BEFORE" resultType="int">
+			select nvl(max(num), 0)+1 from bid_board
+		</selectKey>
+		insert into bid_board(num,id,subject,start_price,now_price,end_price,readcount,boarddate) 
+		values(#{num},#{id},#{subject},#{start_price},0,#{end_price},0,sysdate)
+	</insert>
+	
+	<select id="getDetail" parameterType="int" resultType="BoardVO">
+		select * from bid_board where num=#{num}
+	</select>
+	
+	<update	id="updateBoard" parameterType="BoardVO">
+		update bid_board set now_price=#{price} where num=#{bno}
+	</update>
+	
+	
+</mapper>
