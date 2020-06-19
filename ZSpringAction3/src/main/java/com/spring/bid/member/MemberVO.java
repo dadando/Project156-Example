@@ -1,3 +1,13 @@
+/*
+create table smember(
+    ID VARCHAR2(15) primary key,
+    PASSWORD VARCHAR2(10),
+    NAME VARCHAR2(15), 
+    AGE NUMBER,       
+    GENDER VARCHAR2(5),  
+    EMAIL VARCHAR2(30));
+*/
+
 package com.spring.bid.member;
 
 import org.springframework.stereotype.Component;

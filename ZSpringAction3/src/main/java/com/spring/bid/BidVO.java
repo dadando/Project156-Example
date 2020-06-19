@@ -1,9 +1,10 @@
 /*
 create table table_bid(
     cno number primary key,
+    bidno number not null,
     bno number not null,
     now_price number not null,
-    writer varchar2(20) not null);
+    writer varchar2(20));
 */
 
 package com.spring.bid;
