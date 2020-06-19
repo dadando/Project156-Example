@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- namespace="com.spring.mapper.SungjukMapper는 SungjukMapper인터페이스(SungjukMapper.class)의 이름을 사용한다. -->
+	<!-- root-context에서 아래와 같이 typeAliasesPackage를 설정하면 패키지 경로 생략 가능. -->
+<mapper namespace="com.spring.mapper.BidMapper">
+	
+	<select id="bidList" parameterType="int" resultType="BidVO">
+		select * from table_bid where bno=#{bno} order by cno desc
+	</select>
+	
+	<insert id="bidInsert" parameterType="BidVO">
+		<selectKey keyProperty="cno" order="BEFORE" resultType="int">
+			select nvl(max(cno),0)+1 as cno from table_bid
+		</selectKey>
+		
+		insert into table_bid (cno,bno,now_price,writer,bidno)
+		values(#{cno,jdbcType=NUMERIC },#{bno},#{now_price},#{writer},#{bidno})
+	</insert>
+	
+	<select id="countBidList" parameterType="int" resultType="int">
+		select count(*)+1 from table_bid where bno=#{bno}
+	</select>
+	
+	
+	<select id="selectNowPrice" parameterType="int" resultType="int">
+		select nvl(max(now_price),0) from table_bid where bno=#{bno}
+	</select>
+</mapper>
